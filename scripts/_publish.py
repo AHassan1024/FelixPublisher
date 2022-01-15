@@ -14,7 +14,17 @@ def find_ext(folder, ext):
                 )]
 
 
-def seperate_pdf(folder):
+def create_directory(file, issue_number):
+    parent_dir = file[0:file[0:file.rfind("/")].rfind("/")]
+    print(parent_dir)
+    try:
+        os.mkdir(os.path.join(parent_dir, issue_number))
+        print("Directory '%s' created" % issue_number)
+    except OSError as error:
+        print(error)
+
+
+def find_pdf(folder):
     # Find felix_xxxx.pdf
     print()
     print('Doing nothing atm, should be identifying pdfs now...')
@@ -29,10 +39,13 @@ def seperate_pdf(folder):
             issue_num = input(
                 "Please input your correct issue number, but be warned that it is not the issue number I detected. Please check that the Book is named felix_xxxx.pdf. : ")
         elif issue_confirmation == 'y':
-            # TODO: now that issue_number is confirmed, create a folder in .. that contains the split up pages
-            # parent_dir = f[0:f.find("/felix_")]
-            # print(parent_dir)
+            # TODO: now that issue_number is confirmed, create a folder , that contains the split up pages
+            create_directory(f, issue_num)
+            # split_and_save(f, issue_num)
+
+            # Go back to the menu now
             continue
+
         else:
             print("Error message, try to reroute this upwards...")
             # TODO while loop here? while issue_conf != 'y'
@@ -73,4 +86,4 @@ if __name__ == "__main__":
             sys.exit(0)
 
         elif command == "1":
-            seperate_pdf(working_dir)
+            find_pdf(working_dir)
